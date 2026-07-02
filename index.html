@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Atlas Web Pro">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Atlas Web Pro: directorio local de herramientas web, IA, productividad y recursos creativos.">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Atlas Web Pro</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skipLink" href="#mainContent">Saltar al contenido</a>
+  <noscript><p class="noscript">Atlas Web Pro necesita JavaScript para activar búsqueda, filtros, favoritos y herramientas personalizadas.</p></noscript>
+  <header class="hero">
+    <nav class="topbar" aria-label="Barra principal">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">AWP</span>
+        <div>
+          <strong>Atlas Web Pro</strong>
+          <small>Directorio inteligente de herramientas web</small>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="addToolBtn" class="ghost" type="button">➕ Añadir</button>
+        <button id="randomBtn" class="ghost" type="button">🎲 Aleatoria</button>
+        <button id="viewBtn" class="ghost" type="button" aria-pressed="false">▦ Vista</button>
+        <label class="skinPicker" title="Cambiar skin visual">
+          <span>🎨 Skin</span>
+          <select id="skinSelect" aria-label="Cambiar skin">
+            <option value="pro-dark">Pro oscuro</option>
+            <option value="atlas-gold">Atlas dorado</option>
+            <option value="cyberpunk">Cyberpunk</option>
+            <option value="terminal">Terminal</option>
+            <option value="omega">Omega rojo</option>
+            <option value="light">Claro limpio</option>
+          </select>
+        </label>
+        <button id="exportBtn" class="ghost" type="button">Exportar</button>
+        <label class="ghost fileLabel" role="button" tabindex="0">Importar<input id="importInput" type="file" accept="application/json" hidden></label>
+      </div>
+    </nav>
+
+    <section class="heroContent">
+      <p class="eyebrow">Catálogo ampliado · local · GitHub Pages · PWA</p>
+      <h1>Atlas Web Pro</h1>
+      <p class="subtitle">Un mapa rápido de herramientas para IA, libros, cursos, programación, diseño, vídeo, audio, escritura, ciencia, seguridad, mapas y utilidades.</p>
+      <div class="searchBox">
+        <input id="searchInput" type="search" placeholder="Buscar: Claude, PDF, escritura, mapas, seguridad, fuentes..." autocomplete="off" aria-label="Buscar herramientas">
+        <button id="clearBtn" type="button">Limpiar</button>
+      </div>
+      <p class="shortcut" id="searchHelp">Pulsa <kbd>Ctrl</kbd> + <kbd>K</kbd> para buscar rápido.</p>
+      <p id="statusMessage" class="status" role="status" aria-live="polite"></p>
+    </section>
+  </header>
+
+  <main id="mainContent">
+    <aside class="sidebar">
+      <h2>Categorías</h2>
+      <div id="categoryFilters" class="filters"></div>
+      <hr>
+      <button id="onlyFavsBtn" class="wide" type="button" aria-pressed="false">⭐ Ver favoritas</button>
+      <button id="onlyCustomBtn" class="wide secondary" type="button" aria-pressed="false">✍️ Mis herramientas</button>
+      <button id="resetBtn" class="wide secondary" type="button">Mostrar todo</button>
+      <p class="note">Favoritos, notas, ratings, herramientas propias y skin se guardan solo en este navegador.</p>
+    </aside>
+
+    <section class="content">
+      <section class="dashboard" aria-label="Resumen de Atlas Web Pro">
+        <article class="dashCard"><span>Total</span><strong id="totalCount">0</strong><small>herramientas</small></article>
+        <article class="dashCard"><span>Visibles</span><strong id="visibleCount">0</strong><small>según filtros</small></article>
+        <article class="dashCard"><span>Favoritas</span><strong id="favCount">0</strong><small>guardadas</small></article>
+        <article class="dashCard"><span>Propias</span><strong id="customCount">0</strong><small>añadidas por ti</small></article>
+        <article class="dashCard wideDash"><span>Uso</span><strong id="usageSummary">Sin historial</strong><small>se actualiza al abrir enlaces</small></article>
+      </section>
+
+      <div class="sectionHead">
+        <div>
+          <h2 id="resultTitle">Todas las herramientas</h2>
+          <p id="resultHint">Abre, copia, marca favoritos, puntúa o añade notas personales.</p>
+        </div>
+        <select id="sortSelect" aria-label="Ordenar herramientas">
+          <option value="category">Orden por categoría</option>
+          <option value="name">Orden alfabético</option>
+          <option value="favorites">Favoritas primero</option>
+          <option value="rating">Mejor valoradas</option>
+          <option value="used">Más usadas</option>
+          <option value="recent">Últimas usadas</option>
+        </select>
+      </div>
+
+      <div id="cards" class="grid"></div>
+      <p id="emptyState" class="empty" hidden>No hay resultados. Prueba con otra búsqueda o añade tu propia herramienta.</p>
+    </section>
+  </main>
+
+  <dialog id="toolDialog" class="toolDialog">
+    <form id="toolForm" method="dialog">
+      <div class="dialogHead">
+        <div>
+          <h2 id="dialogTitle">Añadir herramienta</h2>
+          <p>Se guardará en tu navegador con localStorage.</p>
+        </div>
+        <button id="closeDialogBtn" class="iconBtn" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <input id="toolId" type="hidden">
+      <label>Nombre<input id="toolName" required maxlength="60" placeholder="Ej. Mi herramienta"></label>
+      <label>URL<input id="toolUrl" required type="url" placeholder="https://ejemplo.com"></label>
+      <label>Categoría<input id="toolCategory" required list="categorySuggestions" placeholder="Ej. IA y productividad"></label>
+      <datalist id="categorySuggestions"></datalist>
+      <label>Descripción<textarea id="toolDesc" required maxlength="180" placeholder="Para qué sirve esta web..."></textarea></label>
+      <label>Etiquetas<input id="toolTags" placeholder="ia, escritura, gratis"></label>
+      <div class="dialogActions">
+        <button id="deleteCustomBtn" class="danger" type="button" hidden>Eliminar</button>
+        <button class="secondary" id="cancelDialogBtn" type="button">Cancelar</button>
+        <button type="submit">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer>
+    <p>Atlas Web Pro v3.2.2 · HTML/CSS/JS · Offline-first · Preparada para GitHub Pages.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
