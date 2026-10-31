@@ -1898,5 +1898,20 @@ window.ATLAS_TOOLS = [
       "marketing"
     ],
     "id": 187
+  },
+  {
+    "category": "Programación",
+    "name": "agent-qa",
+    "url": "https://vostride.com",
+    "desc": "Pruebas de IA para web y móvil con memoria persistente memidex, automejora validada, MCP y evidencias de ejecución revisables; costes de modelos aparte.",
+    "tags": [
+      "ia",
+      "testing",
+      "mcp",
+      "memoria",
+      "web",
+      "movil"
+    ],
+    "id": 188
   }
 ];

@@ -1,4 +1,4 @@
-const CACHE = 'atlas-web-pro-v3-2-2';
+const CACHE = 'atlas-web-pro-v3-2-2-catalog-188';
 const ASSETS = ['./', './index.html', './style.css', './app.js', './data.js', './manifest.json', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', event => {

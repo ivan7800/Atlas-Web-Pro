@@ -6,7 +6,7 @@ Funciona con HTML, CSS y JavaScript puro. No necesita backend, base de datos ni 
 
 ## Funciones principales
 
-- 187 herramientas incluidas.
+- 188 herramientas incluidas.
 - Buscador instantáneo tolerante a acentos.
 - Filtros por categoría.
 - Favoritos con localStorage.

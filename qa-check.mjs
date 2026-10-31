@@ -25,7 +25,7 @@ vm.createContext(context);
 vm.runInContext(fs.readFileSync('data.js', 'utf8'), context);
 const tools = context.window.ATLAS_TOOLS;
 if (!Array.isArray(tools)) fail('window.ATLAS_TOOLS no es un array');
-if (tools.length !== 187) fail(`Se esperaban 187 herramientas y hay ${tools.length}`);
+if (tools.length !== 188) fail(`Se esperaban 188 herramientas y hay ${tools.length}`);
 
 const seenIds = new Set();
 const seenUrls = new Set();
@@ -45,7 +45,7 @@ for (const [index, tool] of tools.entries()) {
   if (!url.startsWith('https://')) fail(`URL no HTTPS en catálogo base: ${tool.name} -> ${url}`);
   seenIds.add(id); seenUrls.add(normalizedUrl); seenNames.add(normalizedName);
 }
-ok('catálogo válido: 187 herramientas, sin duplicados y con HTTPS');
+ok('catálogo válido: 188 herramientas, sin duplicados y con HTTPS');
 
 const html = fs.readFileSync('index.html', 'utf8');
 const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
